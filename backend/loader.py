@@ -4,58 +4,33 @@ import pandas as pd
 import numpy as np
 import pickle
 
-# ===================== LOCAL DATA DIR (FREE TIER SAFE) =====================
+# ===================== LOCAL DATA DIR =====================
 DATA_DIR = "data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# ===================== GOOGLE DRIVE FILE IDS =====================
+# ===================== HUGGING FACE FILE URLS =====================
 FILES = {
-    "movies.pkl": "1iTAdBS-yVG0Fv3VSzEXxKvEq39mWTDPE",
-    "movie_vectors.pkl": "1x8DHhpANecRhqfwPTfgFHZp2eDN8vyjw",  # ✅ UPDATED
-    "rich_movies_dataset.csv": "1-JOD63yiWJQPOUdGAlh9OXmg0YOgSI53",
-    "title_to_index.pkl": "1h053sS_NwNIY6eYlHGQ2OWtTISzMUvE8",
+    "movies.pkl": "https://huggingface.co/ScaryLeo/cinimatch-data/resolve/main/movies.pkl",
+    "movie_vectors.pkl": "https://huggingface.co/ScaryLeo/cinimatch-data/resolve/main/movie_vectors.pkl",
+    "rich_movies_dataset.csv": "https://huggingface.co/ScaryLeo/cinimatch-data/resolve/main/rich_movies_dataset.csv",
+    "title_to_index.pkl": "https://huggingface.co/ScaryLeo/cinimatch-data/resolve/main/title_to_index.pkl",
 }
 
-
-# ===================== ROBUST GOOGLE DRIVE DOWNLOADER =====================
-def download_from_drive(file_id, dest):
-    URL = "https://drive.google.com/uc?export=download"
-    session = requests.Session()
-
-    response = session.get(URL, params={"id": file_id}, stream=True)
-
-    # Handle Google Drive virus scan confirmation
-    token = None
-    for key, value in response.cookies.items():
-        if key.startswith("download_warning"):
-            token = value
-
-    if token:
-        response = session.get(
-            URL,
-            params={"id": file_id, "confirm": token},
-            stream=True,
-        )
-
-    # 🔴 CRITICAL: Ensure Drive did NOT return HTML
-    content_type = response.headers.get("Content-Type", "")
-    if "text/html" in content_type.lower():
-        raise RuntimeError(
-            f"Google Drive returned HTML instead of file for {dest}. "
-            "Make sure the file is shared as 'Anyone with the link → Viewer'."
-        )
-
+# ===================== SIMPLE & RELIABLE DOWNLOADER =====================
+def download_file(url, dest):
+    r = requests.get(url, stream=True)
+    r.raise_for_status()
     with open(dest, "wb") as f:
-        for chunk in response.iter_content(chunk_size=32768):
+        for chunk in r.iter_content(chunk_size=32768):
             if chunk:
                 f.write(chunk)
 
 # ===================== DOWNLOAD FILES IF MISSING =====================
-for name, file_id in FILES.items():
+for name, url in FILES.items():
     path = os.path.join(DATA_DIR, name)
     if not os.path.exists(path):
-        print(f"⬇️ Downloading {name} from Google Drive...")
-        download_from_drive(file_id, path)
+        print(f"⬇️ Downloading {name} from Hugging Face...")
+        download_file(url, path)
 
 print("✅ All data files ready")
 
@@ -84,10 +59,7 @@ def safe_load_pickle(path, min_size_kb=10):
         raise RuntimeError(f"Missing file: {path}")
 
     if os.path.getsize(path) < min_size_kb * 1024:
-        raise RuntimeError(
-            f"File too small or corrupted: {path} "
-            "(likely Google Drive HTML response)"
-        )
+        raise RuntimeError(f"File corrupted or incomplete: {path}")
 
     with open(path, "rb") as f:
         return pickle.load(f)
