@@ -1,42 +1,37 @@
 import os
-import requests
 import pandas as pd
 import numpy as np
 import pickle
+from huggingface_hub import hf_hub_download
 
 # ===================== LOCAL DATA DIR =====================
 DATA_DIR = "data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# ===================== HUGGING FACE FILE URLS =====================
-FILES = {
-    "movies.pkl": "https://huggingface.co/ScaryLeo/cinimatch-data/resolve/main/movies.pkl",
-    "movie_vectors.pkl": "https://huggingface.co/ScaryLeo/cinimatch-data/resolve/main/movie_vectors.pkl",
-    "rich_movies_dataset.csv": "https://huggingface.co/ScaryLeo/cinimatch-data/resolve/main/rich_movies_dataset.csv",
-    "title_to_index.pkl": "https://huggingface.co/ScaryLeo/cinimatch-data/resolve/main/title_to_index.pkl",
-}
+REPO_ID = "ScaryLeo/cinimatch-data"
 
-# ===================== SIMPLE & RELIABLE DOWNLOADER =====================
-def download_file(url, dest):
-    r = requests.get(url, stream=True)
-    r.raise_for_status()
-    with open(dest, "wb") as f:
-        for chunk in r.iter_content(chunk_size=32768):
-            if chunk:
-                f.write(chunk)
+# ===================== DOWNLOAD FILES =====================
+def ensure_file(filename):
+    local_path = os.path.join(DATA_DIR, filename)
+    if not os.path.exists(local_path):
+        print(f"⬇️ Downloading {filename} from Hugging Face...")
+        downloaded_path = hf_hub_download(
+            repo_id=REPO_ID,
+            filename=filename,
+            repo_type="dataset",
+        )
+        os.replace(downloaded_path, local_path)
+    return local_path
 
-# ===================== DOWNLOAD FILES IF MISSING =====================
-for name, url in FILES.items():
-    path = os.path.join(DATA_DIR, name)
-    if not os.path.exists(path):
-        print(f"⬇️ Downloading {name} from Hugging Face...")
-        download_file(url, path)
+# Required files
+DATASET_PATH = ensure_file("rich_movies_dataset.csv")
+MOVIE_VECTORS_PATH = ensure_file("movie_vectors.pkl")
+MOVIES_PATH = ensure_file("movies.pkl")
+TITLE_TO_INDEX_PATH = ensure_file("title_to_index.pkl")
 
 print("✅ All data files ready")
 
 # ===================== LOAD DATASET =====================
-DATASET_PATH = os.path.join(DATA_DIR, "rich_movies_dataset.csv")
-
 print("📥 Loading dataset...")
 df = pd.read_csv(DATASET_PATH)
 
@@ -53,20 +48,15 @@ df = df.where(pd.notnull(df), None)
 
 print("✅ Dataset cleaned & JSON-safe")
 
-# ===================== SAFE PICKLE LOADING =====================
-def safe_load_pickle(path, min_size_kb=10):
-    if not os.path.exists(path):
-        raise RuntimeError(f"Missing file: {path}")
+# ===================== LOAD PICKLES =====================
+with open(MOVIE_VECTORS_PATH, "rb") as f:
+    movie_vectors = pickle.load(f)
 
-    if os.path.getsize(path) < min_size_kb * 1024:
-        raise RuntimeError(f"File corrupted or incomplete: {path}")
+with open(MOVIES_PATH, "rb") as f:
+    movie_ids = pickle.load(f)
 
-    with open(path, "rb") as f:
-        return pickle.load(f)
-
-movie_vectors = safe_load_pickle(os.path.join(DATA_DIR, "movie_vectors.pkl"))
-movie_ids = safe_load_pickle(os.path.join(DATA_DIR, "movies.pkl"))
-title_to_index = safe_load_pickle(os.path.join(DATA_DIR, "title_to_index.pkl"))
+with open(TITLE_TO_INDEX_PATH, "rb") as f:
+    title_to_index = pickle.load(f)
 
 id_to_index = {mid: i for i, mid in enumerate(movie_ids)}
 
