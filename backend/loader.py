@@ -1,4 +1,5 @@
 import os
+import shutil
 import pandas as pd
 import numpy as np
 import pickle
@@ -10,7 +11,7 @@ os.makedirs(DATA_DIR, exist_ok=True)
 
 REPO_ID = "ScaryLeo/cinimatch-data"
 
-# ===================== DOWNLOAD FILES =====================
+# ===================== DOWNLOAD FILES (SAFE COPY) =====================
 def ensure_file(filename):
     local_path = os.path.join(DATA_DIR, filename)
     if not os.path.exists(local_path):
@@ -20,7 +21,8 @@ def ensure_file(filename):
             filename=filename,
             repo_type="dataset",
         )
-        os.replace(downloaded_path, local_path)
+        # 🔴 CRITICAL FIX: copy instead of replace
+        shutil.copyfile(downloaded_path, local_path)
     return local_path
 
 # Required files
