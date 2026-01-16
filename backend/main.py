@@ -1,8 +1,10 @@
 from fastapi import FastAPI, Query, Body
 from fastapi.middleware.cors import CORSMiddleware
-import recommender
 import pandas as pd
 import os
+
+# IMPORTANT: import AFTER disk files are ensured
+import recommender
 
 app = FastAPI(title="CiniMatch API")
 
