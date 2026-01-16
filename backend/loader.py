@@ -11,10 +11,11 @@ os.makedirs(DATA_DIR, exist_ok=True)
 # ===================== GOOGLE DRIVE FILE IDS =====================
 FILES = {
     "movies.pkl": "1iTAdBS-yVG0Fv3VSzEXxKvEq39mWTDPE",
-    "movie_vectors.pkl": "1GMFO1dg4du5Mus560ykUUgt7w2MBCDdN",
+    "movie_vectors.pkl": "1x8DHhpANecRhqfwPTfgFHZp2eDN8vyjw",  # ✅ UPDATED
     "rich_movies_dataset.csv": "1-JOD63yiWJQPOUdGAlh9OXmg0YOgSI53",
     "title_to_index.pkl": "1h053sS_NwNIY6eYlHGQ2OWtTISzMUvE8",
 }
+
 
 # ===================== ROBUST GOOGLE DRIVE DOWNLOADER =====================
 def download_from_drive(file_id, dest):
