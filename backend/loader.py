@@ -4,8 +4,8 @@ import pandas as pd
 import numpy as np
 import pickle
 
-# ===================== RENDER DISK =====================
-DATA_DIR = "/data"
+# ===================== LOCAL DATA DIR (FREE TIER SAFE) =====================
+DATA_DIR = "data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
 # ===================== GOOGLE DRIVE FILE IDS =====================
@@ -27,7 +27,9 @@ def download_from_drive(file_id, dest):
             token = v
 
     if token:
-        response = session.get(URL, params={"id": file_id, "confirm": token}, stream=True)
+        response = session.get(
+            URL, params={"id": file_id, "confirm": token}, stream=True
+        )
 
     with open(dest, "wb") as f:
         for chunk in response.iter_content(32768):
