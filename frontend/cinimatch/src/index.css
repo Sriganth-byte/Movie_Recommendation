@@ -1,0 +1,29 @@
+:root {
+  --bg: #0b0b0b;
+  --panel: #121212;
+  --card: #1a1a1a;
+  --accent: #1f80e0;
+  --text-muted: #b5b5b5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: #fff;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+img {
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}

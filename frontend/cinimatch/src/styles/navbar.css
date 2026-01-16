@@ -1,0 +1,122 @@
+/* ================= NAVBAR ================= */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* LOGO */
+.logo {
+  color: var(--accent);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+/* SEARCH INPUT */
+.navbar input {
+  margin-left: auto;
+  width: 320px;
+
+  padding: 10px 14px;
+  border-radius: 10px;
+
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  outline: none;
+
+  transition: border 0.2s ease;
+}
+
+.navbar input:focus {
+  border-color: var(--accent);
+}
+
+/* ================= SEARCH RESULTS ================= */
+
+.search-results {
+  position: absolute;
+  top: 72px;
+  right: 32px;
+
+  width: 320px;
+  background: #111;
+  border-radius: 10px;
+  overflow: hidden;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.search-results div {
+  padding: 12px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #222;
+  color: #ddd;
+}
+
+.search-results div:hover {
+  background: #1c1c1c;
+  color: #fff;
+}
+
+/* ================= PERSONAL RECO BUTTON ================= */
+
+.reco-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    #ff512f,
+    #dd2476
+  );
+
+  border: none;
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(221, 36, 118, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+
+  transition: all 0.25s ease;
+}
+
+.reco-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 30px rgba(221, 36, 118, 0.5);
+}
+
+.reco-btn:active {
+  transform: scale(0.97);
+}
+
+.reco-icon {
+  font-size: 16px;
+}
+
+.reco-text {
+  white-space: nowrap;
+}

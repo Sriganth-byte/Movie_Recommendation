@@ -1,0 +1,36 @@
+.movie-card {
+  min-width: 140px;
+  background: var(--card);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.08);
+  z-index: 2;
+}
+
+.movie-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.movie-card p {
+  font-size: 13px;
+  padding: 6px;
+  text-align: center;
+  color: var(--text-muted);
+}
+.movie-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}

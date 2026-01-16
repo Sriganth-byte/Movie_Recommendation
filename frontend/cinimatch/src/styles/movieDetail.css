@@ -1,0 +1,182 @@
+/* ================= ROOT ================= */
+.details {
+  padding: 60px 80px;
+  background: linear-gradient(to bottom, #0b0b0b, #111);
+  color: #fff;
+}
+
+/* ================= MAIN LAYOUT ================= */
+.details-layout {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+/* ================= POSTER ================= */
+.details-poster {
+  flex-shrink: 0;
+}
+
+.details-poster img {
+  width: 320px;
+  border-radius: 18px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+  transition: transform 0.4s ease;
+}
+
+.details-poster img:hover {
+  transform: scale(1.04);
+}
+
+/* ================= META ================= */
+.details-meta {
+  flex: 1;
+}
+
+.details-meta h1 {
+  font-size: 46px;
+  font-weight: 900;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+/* ================= STATS ================= */
+.header-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.header-stats span {
+  background: #1c1c1c;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6e6e6;
+}
+
+/* ================= GENRE ================= */
+.genre-chip {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+/* ================= OVERVIEW ================= */
+.overview {
+  margin-top: 10px;
+  max-width: 900px;
+  color: #cfcfcf;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ================= CAST ================= */
+.cast {
+  margin-top: 28px;
+}
+
+.cast h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.cast-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cast-list span {
+  background: #1a1a1a;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #ddd;
+}
+
+/* ================= SIMILAR ================= */
+.similar-section {
+  margin-top: 60px;
+}
+
+.similar-section h3 {
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+
+/* Horizontal scroll row */
+.similar-row {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* Reveal animation */
+.similar-row.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Individual card animation */
+.similar-item {
+  min-width: 180px;
+  animation: fadeUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= SCROLLBAR ================= */
+.similar-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.similar-row::-webkit-scrollbar-track {
+  background: #111;
+}
+
+.similar-row::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 6px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1000px) {
+  .details {
+    padding: 40px 30px;
+  }
+
+  .details-layout {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .details-poster img {
+    width: 260px;
+  }
+
+  .header-stats {
+    justify-content: center;
+  }
+
+  .overview {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,188 @@
+/* ================= BACKDROP ================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+      circle at 30% 20%,
+      rgba(255,255,255,0.05),
+      transparent 60%
+    ),
+    rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+}
+
+/* ================= MODAL PANEL ================= */
+.modal {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 420px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    #0f0f0f,
+    #0a0a0a
+  );
+  padding: 32px 28px;
+  overflow-y: auto;
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
+}
+
+/* ================= ANIMATION ================= */
+.slide-in {
+  animation: slideIn 0.45s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ================= HEADER ================= */
+.modal h2 {
+  margin-bottom: 24px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: #fff;
+}
+
+/* ================= LABELS ================= */
+.modal label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+}
+
+/* ================= INPUTS ================= */
+.modal input[type="text"],
+.modal input[type="number"],
+.modal input[type="range"] {
+  width: 100%;
+  padding: 12px 14px;
+  background: #050505;
+  border: 1px solid #222;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(255, 200, 50, 0.15);
+}
+
+/* ================= RANGE ================= */
+.modal input[type="range"] {
+  padding: 0;
+  margin-top: 8px;
+}
+
+/* ================= YEAR RANGE ================= */
+.year-range {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.year-range input {
+  text-align: center;
+}
+
+.year-range span {
+  color: #666;
+  font-size: 14px;
+}
+
+/* ================= CHIPS ================= */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #1a1a1a;
+  color: #bbb;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.chip:hover {
+  background: #222;
+  color: #fff;
+}
+
+.chip.active {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(255, 200, 50, 0.25);
+}
+
+/* ================= BUTTONS ================= */
+.primary {
+  margin-top: 28px;
+  background: linear-gradient(
+    135deg,
+    var(--accent),
+    #ffd36a
+  );
+  color: #000;
+  padding: 14px;
+  width: 100%;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(255, 200, 50, 0.4);
+}
+
+.secondary {
+  margin-top: 14px;
+  background: none;
+  color: #888;
+  font-size: 13px;
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.secondary:hover {
+  color: #bbb;
+}
+
+/* ================= SCROLLBAR ================= */
+.modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 6px;
+}

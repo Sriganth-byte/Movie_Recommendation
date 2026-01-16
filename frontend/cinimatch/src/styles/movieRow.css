@@ -1,0 +1,77 @@
+.row {
+  padding: 30px 40px;
+}
+
+.row h2 {
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+/* Wrapper to position arrows */
+.row-wrapper {
+  position: relative;
+}
+
+/* Horizontal list */
+.row-list {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  overflow-x: hidden; /* hide scrollbar */
+  scroll-behavior: smooth;
+}
+
+/* Scroll buttons */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 80px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 32px;
+  font-weight: 300;
+  border: none;
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0.2;
+  transition: opacity 0.25s ease, background 0.25s ease;
+}
+
+.scroll-btn.left {
+  left: -10px;
+}
+
+.scroll-btn.right {
+  right: -10px;
+}
+
+.row-wrapper:hover .scroll-btn {
+  opacity: 1;
+}
+
+.scroll-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* More card */
+.more-card {
+  min-width: 140px;
+  height: 210px;
+  background: var(--card);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.more-card:hover {
+  background: #222;
+  transform: scale(1.05);
+}

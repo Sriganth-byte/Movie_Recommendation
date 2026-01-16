@@ -1,0 +1,76 @@
+.hall {
+  height: 70vh;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-color: #0b0b0b; /* ✅ fallback */
+  overflow: hidden;
+}
+
+/* Gradient + dark overlay */
+.hall-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(11, 11, 11, 0.95),
+    rgba(11, 11, 11, 0.4)
+  );
+  z-index: 1;
+}
+
+/* Content container */
+.overlay-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 60px;
+  display: flex;
+  align-items: flex-end;
+  gap: 40px;
+}
+
+/* Poster (Amazon Prime style) */
+.hall-poster {
+  width: 220px;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+/* Text area */
+.hall-text {
+  max-width: 700px;
+}
+
+.hall-text h2 {
+  color: var(--accent);
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hall-text h1 {
+  font-size: 48px;
+  font-weight: 900;
+  margin: 12px 0;
+}
+
+.hall-text p {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+
+.hall-text button {
+  padding: 12px 24px;
+  background: #fff;
+  color: #000;
+  border-radius: 6px;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.hall-text button:hover {
+  transform: scale(1.05);
+}
