@@ -1,7 +1,5 @@
-// ================= BASE URL =================
-const BASE = "https://cinimatch-backend.onrender.com";
+const BASE = "http://127.0.0.1:8000";
 
-// ================= FETCH HELPER =================
 async function fetchJSON(url, options = {}) {
   const res = await fetch(url, options);
   if (!res.ok) {
@@ -33,7 +31,11 @@ export const searchMovies = (q, offset = 0, limit = 10) =>
 
 /* ================= DETAILS (IMDB ID BASED) ================= */
 
-export const getSimilarMovies = (imdbId, offset = 0, limit = 5) =>
+export const getSimilarMovies = (
+  imdbId,
+  offset = 0,
+  limit = 5
+) =>
   fetchJSON(
     `${BASE}/movies/${encodeURIComponent(imdbId)}/similar?offset=${offset}&limit=${limit}`
   );
@@ -54,9 +56,7 @@ export const getPersonalRecommendations = (
     `${BASE}/personal-recommend?offset=${offset}&limit=${limit}`,
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     }
   );
