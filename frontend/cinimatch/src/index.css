@@ -27,3 +27,27 @@ button {
   border: none;
   outline: none;
 }
+
+.home-error {
+  margin: 24px 40px;
+  color: #ffb4b4;
+  font-size: 14px;
+}
+
+.app-fallback {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+}
+
+.app-fallback button {
+  justify-self: center;
+  padding: 10px 18px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+}

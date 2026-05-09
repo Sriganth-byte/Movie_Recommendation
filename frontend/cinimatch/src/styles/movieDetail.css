@@ -72,6 +72,11 @@
   font-size: 15px;
 }
 
+.details-status {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
 /* ================= CAST ================= */
 .cast {
   margin-top: 28px;

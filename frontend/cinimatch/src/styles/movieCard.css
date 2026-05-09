@@ -4,6 +4,8 @@
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
+  color: inherit;
+  text-align: left;
   transition: transform 0.25s ease;
 }
 
@@ -23,6 +25,10 @@
   padding: 6px;
   text-align: center;
   color: var(--text-muted);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .movie-card {
   transition:

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Navbar from "../components/Navbar";
 import HallOfFame from "../components/HallOfFame";
@@ -8,23 +8,50 @@ import PersonalRecoModal from "../components/PersonalRecoModal";
 
 import {
   getTopPicks,
+  getMetadata,
   getPersonalRecommendations,
 } from "../services/api";
+
+const FALLBACK_GENRES = ["Action", "Drama", "Comedy", "Horror", "Romance"];
 
 export default function Home() {
   const [topPicks, setTopPicks] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [homeError, setHomeError] = useState("");
+  const [metadata, setMetadata] = useState(null);
 
   const [openReco, setOpenReco] = useState(false);
   const [recoInput, setRecoInput] = useState(null);
 
   /* ================= INITIAL LOAD ================= */
   useEffect(() => {
-    getTopPicks().then((data) => {
-      setTopPicks(data || []);
-      setSelectedMovie(data?.[0] || null);
-    });
+    const controller = new AbortController();
+
+    Promise.all([
+      getTopPicks({ signal: controller.signal }),
+      getMetadata({ signal: controller.signal }),
+    ])
+      .then((data) => {
+        const [picks, catalogMetadata] = data;
+        setTopPicks(picks || []);
+        setSelectedMovie(picks?.[0] || null);
+        setMetadata(catalogMetadata || null);
+      })
+      .catch((err) => {
+        if (err.name !== "AbortError") {
+          console.error("Initial load failed:", err);
+          setHomeError("Could not load movie picks. Please check the backend.");
+        }
+      });
+
+    return () => controller.abort();
   }, []);
+
+  const fetchPersonalRecommendations = useCallback(
+    (offset, limit, options) =>
+      getPersonalRecommendations(recoInput, offset, limit, options),
+    [recoInput]
+  );
 
   /* ================= MOVIE SELECTION ================= */
   function handleSelect(movie) {
@@ -54,10 +81,12 @@ export default function Home() {
         onSelect={handleSelect}
       />
 
+      {homeError && <p className="home-error">{homeError}</p>}
+
       <MovieDetails
-      movie={selectedMovie}
-      onSelect={handleSelect}
-    />
+        movie={selectedMovie}
+        onSelect={handleSelect}
+      />
 
 
       {/* ================= PERSONAL RECOMMENDATIONS ================= */}
@@ -65,13 +94,7 @@ export default function Home() {
         <MovieRow
           title="Recommended For You"
           autoLoad={true}
-          fetchMore={(offset, limit) =>
-            getPersonalRecommendations(
-              recoInput,
-              offset,
-              limit
-            )
-          }
+          fetchMore={fetchPersonalRecommendations}
           onSelect={handleSelect}
         />
       )}
@@ -84,7 +107,7 @@ export default function Home() {
       />
 
       {/* ================= GENRES ================= */}
-      {["Action", "Drama", "Comedy", "Horror", "Romance"].map((g) => (
+      {(metadata?.genres?.length ? metadata.genres.slice(0, 5) : FALLBACK_GENRES).map((g) => (
         <MovieRow
           key={g}
           title={g}
@@ -97,6 +120,7 @@ export default function Home() {
       {/* ================= MODAL ================= */}
       <PersonalRecoModal
         open={openReco}
+        metadata={metadata}
         onClose={() => setOpenReco(false)}
         onSubmit={(data) => {
           setRecoInput(data);

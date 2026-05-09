@@ -22,6 +22,8 @@ backend/data/
 node_modules/
 frontend/dist/
 frontend/build/
+frontend/cinimatch/build/
+frontend/cinimatch/dist/
 
 # ===============================
 # OS / Editor

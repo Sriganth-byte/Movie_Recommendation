@@ -71,7 +71,19 @@
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.more-card:hover {
+.more-card:hover:not(:disabled) {
   background: #222;
   transform: scale(1.05);
+}
+
+.more-card.disabled,
+.more-card:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.row-status {
+  min-width: 180px;
+  color: var(--text-muted);
+  font-size: 14px;
 }

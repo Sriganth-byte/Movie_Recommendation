@@ -60,16 +60,29 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
-.search-results div {
+.search-results button,
+.search-status {
+  width: 100%;
   padding: 12px 14px;
-  cursor: pointer;
   border-bottom: 1px solid #222;
   color: #ddd;
+  background: transparent;
+  text-align: left;
 }
 
-.search-results div:hover {
+.search-results button {
+  cursor: pointer;
+}
+
+.search-results button:hover,
+.search-results button:focus {
   background: #1c1c1c;
   color: #fff;
+}
+
+.search-status {
+  color: #888;
+  cursor: default;
 }
 
 /* ================= PERSONAL RECO BUTTON ================= */

@@ -67,6 +67,7 @@
 }
 
 /* ================= INPUTS ================= */
+.modal input,
 .modal input[type="text"],
 .modal input[type="number"],
 .modal input[type="range"] {

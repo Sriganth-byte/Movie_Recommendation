@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "../styles/hallOfFame.css";
 
 const BACKDROP = "https://image.tmdb.org/t/p/original";
@@ -9,6 +9,7 @@ export default function HallOfFame({ movies = [], onSelect }) {
 
   useEffect(() => {
     if (!movies.length) return;
+    setIndex(0);
     const timer = setInterval(
       () => setIndex((i) => (i + 1) % movies.length),
       5000
@@ -16,8 +17,11 @@ export default function HallOfFame({ movies = [], onSelect }) {
     return () => clearInterval(timer);
   }, [movies.length]);
 
-  if (!movies.length) return null;
-  const m = movies[index];
+  const m = movies[Math.min(index, movies.length - 1)];
+
+  const handleSelect = useCallback(() => onSelect(m), [m, onSelect]);
+
+  if (!movies.length || !m) return null;
 
   const bgImage = m.backdrop_path
     ? `${BACKDROP}${m.backdrop_path}`
@@ -46,7 +50,7 @@ export default function HallOfFame({ movies = [], onSelect }) {
           <h1>{m.title}</h1>
           <p>{m.overview || "No description available."}</p>
 
-          <button onClick={() => onSelect(m)}>View Details</button>
+          <button type="button" onClick={handleSelect}>View Details</button>
         </div>
       </div>
     </section>
